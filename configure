@@ -73532,12 +73532,13 @@ EOF
 
 php_enable_sysvmsg=no
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to enable System V IPC support" >&5
-$as_echo_n "checking whether to enable System V IPC support... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to enable System V IPC support" >&5
+printf %s "checking whether to enable System V IPC support... " >&6; }
 # Check whether --enable-sysvmsg was given.
-if test "${enable_sysvmsg+set}" = set; then :
+if test ${enable_sysvmsg+y}
+then :
   enableval=$enable_sysvmsg; PHP_SYSVMSG=$enableval
-else
+else $as_nop
 
   PHP_SYSVMSG=no
   test "$PHP_ENABLE_ALL" && PHP_SYSVMSG=$PHP_ENABLE_ALL
@@ -73567,25 +73568,25 @@ esac
 
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ext_output" >&5
-$as_echo "$ext_output" >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ext_output" >&5
+printf "%s\n" "$ext_output" >&6; }
 
 
 
 
 if test "$PHP_SYSVMSG" != "no"; then
-  ac_fn_c_check_header_mongrel "$LINENO" "sys/msg.h" "ac_cv_header_sys_msg_h" "$ac_includes_default"
-if test "x$ac_cv_header_sys_msg_h" = xyes; then :
+  ac_fn_c_check_header_compile "$LINENO" "sys/msg.h" "ac_cv_header_sys_msg_h" "$ac_includes_default"
+if test "x$ac_cv_header_sys_msg_h" = xyes
+then :
 
-else
+else $as_nop
   as_fn_error $? "Cannot enable System V IPC support, sys/msg.h is missing" "$LINENO" 5
 
 fi
 
 
 
-
-$as_echo "#define HAVE_SYSVMSG 1" >>confdefs.h
+printf "%s\n" "#define HAVE_SYSVMSG 1" >>confdefs.h
 
 
   ext_builddir=ext/sysvmsg
@@ -73626,13 +73627,16 @@ $as_echo "#define HAVE_SYSVMSG 1" >>confdefs.h
       PHP_GLOBAL_OBJS="$PHP_GLOBAL_OBJS $ac_bdir$ac_obj.lo"
 
       case $ac_src in
-        *.c) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.s) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.S) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.cpp|*.cc|*.cxx) ac_comp="$b_cxx_pre $ac_extra $ac_inc $b_cxx_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_cxx_post" ;;
+        *.c) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.s) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.S) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.cpp|*.cc|*.cxx) ac_comp="$b_cxx_pre $ac_inc $b_cxx_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_cxx_post" ;;
       esac
 
+      ac_comp="$ac_comp -MMD -MF $ac_bdir$ac_obj.dep -MT $ac_bdir$ac_obj.lo"
+
     cat >>Makefile.objects<<EOF
+-include $ac_bdir$ac_obj.dep
 $ac_bdir$ac_obj.lo: $ac_srcdir$ac_src
 	$ac_comp
 EOF
@@ -73675,13 +73679,16 @@ EOF
       shared_objects_sysvmsg="$shared_objects_sysvmsg $ac_bdir$ac_obj.lo"
 
       case $ac_src in
-        *.c) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.s) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.S) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.cpp|*.cc|*.cxx) ac_comp="$b_cxx_pre $ac_extra $ac_inc $b_cxx_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_cxx_post" ;;
+        *.c) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -DZEND_COMPILE_DL_EXT=1 -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.s) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -DZEND_COMPILE_DL_EXT=1 -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.S) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -DZEND_COMPILE_DL_EXT=1 -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.cpp|*.cc|*.cxx) ac_comp="$b_cxx_pre $ac_inc $b_cxx_meta $ac_extra -DZEND_COMPILE_DL_EXT=1 -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_cxx_post" ;;
       esac
 
+      ac_comp="$ac_comp -MMD -MF $ac_bdir$ac_obj.dep -MT $ac_bdir$ac_obj.lo"
+
     cat >>Makefile.objects<<EOF
+-include $ac_bdir$ac_obj.dep
 $ac_bdir$ac_obj.lo: $ac_srcdir$ac_src
 	$ac_comp
 EOF
@@ -73707,17 +73714,15 @@ EOF
 
   cat >>Makefile.objects<<EOF
 \$(phplibdir)/sysvmsg.$suffix: $ext_builddir/sysvmsg.$suffix
-	\$(LIBTOOL) --mode=install cp $ext_builddir/sysvmsg.$suffix \$(phplibdir)
+	\$(LIBTOOL) --tag=CC --mode=install cp $ext_builddir/sysvmsg.$suffix \$(phplibdir)
 
 $ext_builddir/sysvmsg.$suffix: \$(shared_objects_sysvmsg) \$(SYSVMSG_SHARED_DEPENDENCIES)
-	\$(LIBTOOL) --mode=link \$(CC) \$(COMMON_FLAGS) \$(CFLAGS_CLEAN) \$(EXTRA_CFLAGS) \$(LDFLAGS) $additional_flags -o \$@ -export-dynamic -avoid-version -prefer-pic -module -rpath \$(phplibdir) \$(EXTRA_LDFLAGS) \$(shared_objects_sysvmsg) \$(SYSVMSG_SHARED_LIBADD)
+	\$(LIBTOOL) --tag=CC --mode=link \$(CC) -shared \$(COMMON_FLAGS) \$(CFLAGS_CLEAN) \$(EXTRA_CFLAGS) \$(LDFLAGS) $additional_flags -o \$@ -export-dynamic -avoid-version -prefer-pic -module -rpath \$(phplibdir) \$(EXTRA_LDFLAGS) \$(shared_objects_sysvmsg) \$(SYSVMSG_SHARED_LIBADD)
 
 EOF
 
 
-cat >>confdefs.h <<_ACEOF
-#define COMPILE_DL_SYSVMSG 1
-_ACEOF
+printf "%s\n" "#define COMPILE_DL_SYSVMSG 1" >>confdefs.h
 
     fi
   fi
@@ -73756,13 +73761,16 @@ _ACEOF
       PHP_GLOBAL_OBJS="$PHP_GLOBAL_OBJS $ac_bdir$ac_obj.lo"
 
       case $ac_src in
-        *.c) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.s) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.S) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.cpp|*.cc|*.cxx) ac_comp="$b_cxx_pre $ac_extra $ac_inc $b_cxx_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_cxx_post" ;;
+        *.c) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.s) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.S) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.cpp|*.cc|*.cxx) ac_comp="$b_cxx_pre $ac_inc $b_cxx_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_cxx_post" ;;
       esac
 
+      ac_comp="$ac_comp -MMD -MF $ac_bdir$ac_obj.dep -MT $ac_bdir$ac_obj.lo"
+
     cat >>Makefile.objects<<EOF
+-include $ac_bdir$ac_obj.dep
 $ac_bdir$ac_obj.lo: $ac_srcdir$ac_src
 	$ac_comp
 EOF
@@ -73802,13 +73810,16 @@ EOF
       PHP_GLOBAL_OBJS="$PHP_GLOBAL_OBJS $ac_bdir$ac_obj.lo"
 
       case $ac_src in
-        *.c) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.s) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.S) ac_comp="$b_c_pre $ac_extra $ac_inc $b_c_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
-        *.cpp|*.cc|*.cxx) ac_comp="$b_cxx_pre $ac_extra $ac_inc $b_cxx_meta -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_cxx_post" ;;
+        *.c) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.s) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.S) ac_comp="$b_c_pre $ac_inc $b_c_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_c_post" ;;
+        *.cpp|*.cc|*.cxx) ac_comp="$b_cxx_pre $ac_inc $b_cxx_meta $ac_extra -c $ac_srcdir$ac_src -o $ac_bdir$ac_obj.$b_lo $b_cxx_post" ;;
       esac
 
+      ac_comp="$ac_comp -MMD -MF $ac_bdir$ac_obj.dep -MT $ac_bdir$ac_obj.lo"
+
     cat >>Makefile.objects<<EOF
+-include $ac_bdir$ac_obj.dep
 $ac_bdir$ac_obj.lo: $ac_srcdir$ac_src
 	$ac_comp
 EOF
