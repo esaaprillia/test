@@ -73573,14 +73573,14 @@ $as_echo "$ext_output" >&6; }
 
 
 
-if test "$PHP_SYSVMSG" != "no"; then
-  ac_fn_c_check_header_mongrel "$LINENO" "sys/msg.h" "ac_cv_header_sys_msg_h" "$ac_includes_default"
-if test "x$ac_cv_header_sys_msg_h" = xyes; then :
-
-else
-  as_fn_error $? "Cannot enable System V IPC support, sys/msg.h is missing" "$LINENO" 5
-
-fi
+#if test "$PHP_SYSVMSG" != "no"; then
+#  ac_fn_c_check_header_mongrel "$LINENO" "sys/msg.h" "ac_cv_header_sys_msg_h" "$ac_includes_default"
+#if test "x$ac_cv_header_sys_msg_h" = xyes; then :
+#
+#else
+#  as_fn_error $? "Cannot enable System V IPC support, sys/msg.h is missing" "$LINENO" 5
+#
+#fi
 
 
 
